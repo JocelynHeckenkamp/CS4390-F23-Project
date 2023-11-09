@@ -9,9 +9,9 @@ class UDPServer {
     public static void main(String args[]) throws Exception
     {
         DatagramSocket serverSocket = new DatagramSocket(9876);
-        HashMap<InetAddress, String> nameMap = new HashMap<InetAddress, String>();
+        HashMap<Integer, String> portMap = new HashMap<Integer, String>();
 
-        Logger logger = Logger.getLogger("MyLog");
+        Logger logger = Logger.getLogger("Server Log");
         FileHandler fileHandler = new FileHandler("server.log");
         SimpleFormatter formatter = new SimpleFormatter();
         fileHandler.setFormatter(formatter);
@@ -32,10 +32,11 @@ class UDPServer {
             InetAddress IPAddress = receivePacket.getAddress();
             int port = receivePacket.getPort();
 
-            String user = nameMap.get(IPAddress);
+            String user = portMap.get(port);
             if(user == null) {
-                nameMap.put(IPAddress, sentence);
-                logger.info("Connection established with IP Address " + IPAddress + " with client name " + sentence);
+                portMap.put(port, sentence);
+                logger.info("Connection established with user " + sentence + "\n" +
+                        "User details: IP Address " + IPAddress + " Port #: " + port);
 
                 String ack = "Connection with server successfully established";
                 sendData = ack.getBytes();
@@ -47,7 +48,7 @@ class UDPServer {
             }
 
             else {
-                logger.info("User " + user + " sent the following message to port #" + port + "\n" + sentence);
+                logger.info("User " + user + " sent the following message " + "\n" + sentence);
 
                 String response = "Temp response";
                 sendData = response.getBytes();
@@ -57,8 +58,6 @@ class UDPServer {
 
                 logger.info("Sent the following response to " + user + "\n" + sentence);
             }
-
-
         }
     }
 }
