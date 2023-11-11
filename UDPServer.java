@@ -50,13 +50,23 @@ class UDPServer {
             else {
                 logger.info("User " + user + " sent the following message " + "\n" + sentence);
 
-                String response = "Temp response";
+                String response = "nothing";
+                double result = 0;
+
+                try {
+                    BinaryTree tree = new BinaryTree(sentence);
+                    result = tree.calculate(tree.root);
+                    response = Double.toString(result);
+                } catch (Exception e) {
+                    response = "Parsing error. Valid operations: + - * /";
+                }
+
                 sendData = response.getBytes();
 
                 DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, IPAddress, port);
                 serverSocket.send(sendPacket);
 
-                logger.info("Sent the following response to " + user + "\n" + sentence);
+                logger.info("Sent the following response to " + user + "\n" + response);
             }
         }
     }
