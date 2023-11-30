@@ -14,7 +14,7 @@ class Node {
     }
 
     public void parse() {
-        // addition, subtraction
+        // addition, subtraction first
         for (int i = 0; i < this.value.length(); i++) {
             String c = this.value.substring(i, i + 1);
             if (c.equals("+") || c.equals("-")) {
@@ -28,7 +28,7 @@ class Node {
             }
         }
 
-        // multiplication, division
+        // multiplication, division second
         for (int i = 0; i < this.value.length(); i++) {
             String c = this.value.substring(i, i + 1);
             if (c.equals("*") || c.equals("/")) {

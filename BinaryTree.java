@@ -1,19 +1,19 @@
-public class BinaryTree {
+public class BinaryTree { // class used for each input
     String sentence;
     Node root;
     double result;
 
     public BinaryTree(String sentence) {
-        this.sentence = sentence;
+        this.sentence = sentence; // user input
         removeWhitespace();
         
         this.root = new Node(this.sentence);
         buildTree(root);
     }
 
-    void buildTree(Node node) {
+    void buildTree(Node node) { // recursive function to build tree until all numbers are leaves
         node.parse();
-        if (!node.leaf) {
+        if (!node.leaf) { // every internal node will have a left and a right
             if (!node.left.leaf) {
                 buildTree(node.left);
             }
@@ -23,7 +23,7 @@ public class BinaryTree {
         }
     }
 
-    public double calculate(Node node) {
+    public double calculate(Node node) { // evaluates expression
         if (node.leaf) {
             return node.numValue;
         }
